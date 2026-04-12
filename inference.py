@@ -17,10 +17,10 @@ except ImportError:
 load_dotenv()
 
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
-MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-4.1-mini")
+MODEL_NAME = os.getenv("MODEL_NAME", "meta-llama/Meta-Llama-3-8B-Instruct")
 HF_TOKEN = os.getenv("HF_TOKEN")
 LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME") or os.getenv("IMAGE_NAME")
-ENV_BASE_URL = os.getenv("ENV_BASE_URL", "http://127.0.0.1:8000")
+ENV_BASE_URL = os.getenv("ENV_BASE_URL", "https://Yash-25-iac-security-auditor.hf.space")
 TASK_NAME = os.getenv("IAC_AUDITOR_TASK_ID", "random")
 BENCHMARK = "iac_security_auditor_env"
 SUCCESS_SCORE_THRESHOLD = 0.50

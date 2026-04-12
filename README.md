@@ -1,3 +1,14 @@
+---
+title: IaC Security Auditor
+emoji: "🛡️"
+colorFrom: red
+colorTo: yellow
+sdk: docker
+app_port: 8000
+pinned: false
+short_description: OpenEnv environment for auditing Terraform IaC security issues
+---
+
 # IaC Security Auditor OpenEnv Environment
 
 An OpenEnv-compatible benchmark where an agent audits Terraform Infrastructure-as-Code for security vulnerabilities.
@@ -7,7 +18,7 @@ An OpenEnv-compatible benchmark where an agent audits Terraform Infrastructure-a
 - Identify Terraform misconfigurations.
 - Classify severity.
 - Propose remediations.
-- For hard tasks, explain how issues chain into an attack path.
+- For hard tasks, explain how multiple issues chain into an attack path.
 
 ## Benchmark design
 
@@ -73,9 +84,9 @@ Run the server:
 python -m uvicorn server.app:app --host 0.0.0.0 --port 8000
 ```
 
-## Hugging Face / hackathon notes
+## Hugging Face notes
 
-- Keep `inference.py` in the project root.
-- Use the OpenAI client for LLM calls.
-- Ensure `API_BASE_URL`, `MODEL_NAME`, and `HF_TOKEN` are wired as required.
-- Docker builds from `server/Dockerfile`.
+- This Space uses `sdk: docker`.
+- The root `Dockerfile` launches the OpenEnv HTTP app on port `8000`.
+- Add `API_BASE_URL` and `MODEL_NAME` as Space Variables.
+- Add `HF_TOKEN` as a Space Secret.
