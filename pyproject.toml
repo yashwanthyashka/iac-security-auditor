@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openenv-iac-security-auditor-env"
+version = "0.1.0"
+description = "Terraform IaC security auditing environment for OpenEnv"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core[core]>=0.2.3",
+    "openai>=2.7.2",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+server = "iac_security_auditor_env.server.app:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["iac_security_auditor_env", "iac_security_auditor_env.server"]
+package-dir = { "iac_security_auditor_env" = ".", "iac_security_auditor_env.server" = "server" }
