@@ -7,6 +7,8 @@ except Exception as e:  # pragma: no cover
         "openenv is required for the web interface. Install dependencies first."
     ) from e
 
+from fastapi.responses import RedirectResponse
+
 try:
     from ..models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
     from .iac_security_auditor_env_environment import IaCSecurityAuditorEnvironment
@@ -22,6 +24,11 @@ app = create_app(
     env_name="iac_security_auditor_env",
     max_concurrent_envs=4,
 )
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
 
 
 def main(host: str = "0.0.0.0", port: int = 8000):
