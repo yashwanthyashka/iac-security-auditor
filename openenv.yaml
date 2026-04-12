@@ -1,6 +1,88 @@
-spec_version: 1
-name: iac_security_auditor_env
+name: iac-security-auditor
+version: "1.0"
+description: >
+  An OpenEnv-compliant reinforcement learning environment where AI agents audit
+  Terraform Infrastructure-as-Code configurations for security vulnerabilities,
+  assign severity, recommend remediations, and explain attack chains.
+
+author: Yash-25
+tags:
+  - security
+  - terraform
+  - infrastructure-as-code
+  - cloud
+  - rl
+
+tasks:
+  - name: audit-public-s3
+    id: iac_audit_task_0
+    task_id: easy_s3_public
+    description: "Identify public S3 exposure and missing encryption in Terraform."
+    difficulty: easy
+    reward_range: [0.0, 1.0]
+    max_steps: 1
+    grader:
+      type: function
+      module: graders
+      function: grade_task_0
+      partial_credit: true
+
+  - name: audit-public-rds
+    id: iac_audit_task_1
+    task_id: medium_rds_exposure
+    description: "Identify public database exposure and a hardcoded password."
+    difficulty: medium
+    reward_range: [0.0, 1.0]
+    max_steps: 1
+    grader:
+      type: function
+      module: graders
+      function: grade_task_1
+      partial_credit: true
+
+  - name: audit-bastion-iam
+    id: iac_audit_task_2
+    task_id: medium_ec2_role
+    description: "Identify internet-facing bastion access and overprivileged IAM."
+    difficulty: medium
+    reward_range: [0.0, 1.0]
+    max_steps: 1
+    grader:
+      type: function
+      module: graders
+      function: grade_task_2
+      partial_credit: true
+
+  - name: audit-attack-chain
+    id: iac_audit_task_3
+    task_id: hard_imds_chain
+    description: "Explain how internet exposure, metadata access, and IAM combine into an attack chain."
+    difficulty: hard
+    reward_range: [0.0, 1.0]
+    max_steps: 1
+    grader:
+      type: function
+      module: graders
+      function: grade_task_3
+      partial_credit: true
+
+endpoints:
+  reset: /reset
+  step: /step
+  state: /state
+
+reward:
+  type: float
+  range: [0.0, 1.0]
+  partial_credit: true
+
+grading:
+  enabled: true
+  num_tasks: 4
+
 type: space
 runtime: fastapi
 app: server.app:app
 port: 8000
+framework: fastapi
+python_version: "3.11"
