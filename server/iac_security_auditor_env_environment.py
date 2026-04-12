@@ -11,11 +11,11 @@ from openenv.core.env_server.types import EnvironmentMetadata, State
 
 try:
     from ..benchmark_data import TASK_INDEX, TASKS, AuditTask
-    from ..grader import grade_submission
+    from ..graders import grade_submission
     from ..models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
 except ImportError:
     from benchmark_data import TASK_INDEX, TASKS, AuditTask
-    from grader import grade_submission
+    from graders import grade_submission
     from models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
 
 

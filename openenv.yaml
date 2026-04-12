@@ -82,7 +82,7 @@ grading:
 
 type: space
 runtime: fastapi
-app: server.app:app
+app: app:app
 port: 8000
 framework: fastapi
 python_version: "3.11"

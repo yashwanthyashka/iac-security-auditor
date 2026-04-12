@@ -11,9 +11,11 @@ from fastapi.responses import RedirectResponse
 
 try:
     from ..models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
+    from ..graders import TASKS as DECLARED_TASKS
     from .iac_security_auditor_env_environment import IaCSecurityAuditorEnvironment
 except ImportError:
     from models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
+    from graders import TASKS as DECLARED_TASKS
     from server.iac_security_auditor_env_environment import IaCSecurityAuditorEnvironment
 
 
@@ -29,6 +31,11 @@ app = create_app(
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse(url="/docs")
+
+
+@app.get("/tasks")
+def list_tasks():
+    return {"tasks": DECLARED_TASKS}
 
 
 def main(host: str = "0.0.0.0", port: int = 8000):
