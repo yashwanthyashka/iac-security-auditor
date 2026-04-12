@@ -1,15 +1,10 @@
-"""Static task registry for hackathon validator discovery."""
-
-from benchmark_data import TASKS as BENCHMARK_TASKS
-
-
 TASKS = [
     {
         "id": "iac_audit_task_0",
-        "task_id": BENCHMARK_TASKS[0].task_id,
+        "task_id": "easy_s3_public",
         "name": "audit-public-s3",
-        "difficulty": BENCHMARK_TASKS[0].difficulty,
-        "description": BENCHMARK_TASKS[0].title,
+        "difficulty": "easy",
+        "description": "Audit a Terraform configuration with a public S3 bucket and missing encryption.",
         "max_steps": 1,
         "reset_params": {"seed": 0},
         "action_schema": {
@@ -21,10 +16,10 @@ TASKS = [
     },
     {
         "id": "iac_audit_task_1",
-        "task_id": BENCHMARK_TASKS[1].task_id,
+        "task_id": "medium_rds_exposure",
         "name": "audit-public-rds",
-        "difficulty": BENCHMARK_TASKS[1].difficulty,
-        "description": BENCHMARK_TASKS[1].title,
+        "difficulty": "medium",
+        "description": "Audit a Terraform configuration with public database exposure and a hardcoded password.",
         "max_steps": 1,
         "reset_params": {"seed": 1},
         "action_schema": {
@@ -36,10 +31,10 @@ TASKS = [
     },
     {
         "id": "iac_audit_task_2",
-        "task_id": BENCHMARK_TASKS[2].task_id,
+        "task_id": "medium_ec2_role",
         "name": "audit-bastion-iam",
-        "difficulty": BENCHMARK_TASKS[2].difficulty,
-        "description": BENCHMARK_TASKS[2].title,
+        "difficulty": "medium",
+        "description": "Audit a Terraform configuration with internet-exposed SSH and an overprivileged IAM policy.",
         "max_steps": 1,
         "reset_params": {"seed": 2},
         "action_schema": {
@@ -51,10 +46,10 @@ TASKS = [
     },
     {
         "id": "iac_audit_task_3",
-        "task_id": BENCHMARK_TASKS[3].task_id,
+        "task_id": "hard_imds_chain",
         "name": "audit-attack-chain",
-        "difficulty": BENCHMARK_TASKS[3].difficulty,
-        "description": BENCHMARK_TASKS[3].title,
+        "difficulty": "hard",
+        "description": "Audit a Terraform configuration where internet exposure, metadata access, and IAM permissions form an attack chain.",
         "max_steps": 1,
         "reset_params": {"seed": 3},
         "action_schema": {
@@ -66,8 +61,18 @@ TASKS = [
     },
 ]
 
-TASK_ID_TO_INDEX = {task["task_id"]: idx for idx, task in enumerate(TASKS)}
+TASK_ID_TO_INDEX = {
+    "easy_s3_public": 0,
+    "medium_rds_exposure": 1,
+    "medium_ec2_role": 2,
+    "hard_imds_chain": 3,
+}
 
-TASK_GRADER_PAIRS = [(task["id"], task["grader"]) for task in TASKS]
+TASK_GRADER_PAIRS = [
+    ("iac_audit_task_0", "graders:grade_task_0"),
+    ("iac_audit_task_1", "graders:grade_task_1"),
+    ("iac_audit_task_2", "graders:grade_task_2"),
+    ("iac_audit_task_3", "graders:grade_task_3"),
+]
 
 __all__ = ["TASKS", "TASK_ID_TO_INDEX", "TASK_GRADER_PAIRS"]
