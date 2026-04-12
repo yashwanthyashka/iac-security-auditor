@@ -10,7 +10,7 @@ except Exception as e:  # pragma: no cover
 try:
     from ..models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
     from .iac_security_auditor_env_environment import IaCSecurityAuditorEnvironment
-except ModuleNotFoundError:
+except ImportError:
     from models import IaCSecurityAuditorAction, IaCSecurityAuditorObservation
     from server.iac_security_auditor_env_environment import IaCSecurityAuditorEnvironment
 
