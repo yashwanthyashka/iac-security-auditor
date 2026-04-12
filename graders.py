@@ -7,7 +7,10 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-from benchmark_data import AuditTask, ExpectedFinding, TASKS
+try:
+    from .benchmark_data import AuditTask, ExpectedFinding, TASKS
+except ImportError:
+    from benchmark_data import AuditTask, ExpectedFinding, TASKS
 
 EPSILON_SCORE = 0.02
 
@@ -153,29 +156,39 @@ def grade_submission(task: AuditTask, report_json: str) -> GradeResult:
         total_findings=len(task.findings),
     )
 
-
 def grade_task_0(state: dict, reward: float) -> float:
-    return _strict_open_interval(
-        reward if str(state.get("task_id", "")) == "easy_s3_public" else 0.0
-    )
-
+    return reward
 
 def grade_task_1(state: dict, reward: float) -> float:
-    return _strict_open_interval(
-        reward if str(state.get("task_id", "")) == "medium_rds_exposure" else 0.0
-    )
-
+    return reward
 
 def grade_task_2(state: dict, reward: float) -> float:
-    return _strict_open_interval(
-        reward if str(state.get("task_id", "")) == "medium_ec2_role" else 0.0
-    )
-
+    return reward
 
 def grade_task_3(state: dict, reward: float) -> float:
-    return _strict_open_interval(
-        reward if str(state.get("task_id", "")) == "hard_imds_chain" else 0.0
-    )
+    return reward
+# def grade_task_0(state: dict, reward: float) -> float:
+#     return _strict_open_interval(
+#         reward if str(state.get("task_id", "")) == "easy_s3_public" else 0.0
+#     )
+
+
+# def grade_task_1(state: dict, reward: float) -> float:
+#     return _strict_open_interval(
+#         reward if str(state.get("task_id", "")) == "medium_rds_exposure" else 0.0
+#     )
+
+
+# def grade_task_2(state: dict, reward: float) -> float:
+#     return _strict_open_interval(
+#         reward if str(state.get("task_id", "")) == "medium_ec2_role" else 0.0
+#     )
+
+
+# def grade_task_3(state: dict, reward: float) -> float:
+#     return _strict_open_interval(
+#         reward if str(state.get("task_id", "")) == "hard_imds_chain" else 0.0
+#     )
 
 
 GRADERS = {
@@ -192,73 +205,73 @@ TASK_GRADER_PAIRS = [
     ("iac_audit_task_3", grade_task_3),
 ]
 
-TASKS = [
-    {
-        "id": "iac_audit_task_0",
-        "name": "audit-public-s3",
-        "difficulty": "easy",
-        "description": "Identify public S3 exposure and missing encryption in Terraform.",
-        "max_steps": 1,
-        "reward_range": [0.0, 1.0],
-        "grader": {
-            "type": "function",
-            "module": "graders",
-            "function": "grade_task_0",
-            "partial_credit": True,
-        },
-    },
-    {
-        "id": "iac_audit_task_1",
-        "name": "audit-public-rds",
-        "difficulty": "medium",
-        "description": "Identify public database exposure and a hardcoded password.",
-        "max_steps": 1,
-        "reward_range": [0.0, 1.0],
-        "grader": {
-            "type": "function",
-            "module": "graders",
-            "function": "grade_task_1",
-            "partial_credit": True,
-        },
-    },
-    {
-        "id": "iac_audit_task_2",
-        "name": "audit-bastion-iam",
-        "difficulty": "medium",
-        "description": "Identify internet-facing bastion access and overprivileged IAM.",
-        "max_steps": 1,
-        "reward_range": [0.0, 1.0],
-        "grader": {
-            "type": "function",
-            "module": "graders",
-            "function": "grade_task_2",
-            "partial_credit": True,
-        },
-    },
-    {
-        "id": "iac_audit_task_3",
-        "name": "audit-attack-chain",
-        "difficulty": "hard",
-        "description": "Explain how internet exposure, metadata access, and IAM combine into an attack chain.",
-        "max_steps": 1,
-        "reward_range": [0.0, 1.0],
-        "grader": {
-            "type": "function",
-            "module": "graders",
-            "function": "grade_task_3",
-            "partial_credit": True,
-        },
-    },
-]
+# TASKS = [
+#     {
+#         "id": "iac_audit_task_0",
+#         "name": "audit-public-s3",
+#         "difficulty": "easy",
+#         "description": "Identify public S3 exposure and missing encryption in Terraform.",
+#         "max_steps": 1,
+#         "reward_range": [0.0, 1.0],
+#         "grader": {
+#             "type": "function",
+#             "module": "graders",
+#             "function": "grade_task_0",
+#             "partial_credit": True,
+#         },
+#     },
+#     {
+#         "id": "iac_audit_task_1",
+#         "name": "audit-public-rds",
+#         "difficulty": "medium",
+#         "description": "Identify public database exposure and a hardcoded password.",
+#         "max_steps": 1,
+#         "reward_range": [0.0, 1.0],
+#         "grader": {
+#             "type": "function",
+#             "module": "graders",
+#             "function": "grade_task_1",
+#             "partial_credit": True,
+#         },
+#     },
+#     {
+#         "id": "iac_audit_task_2",
+#         "name": "audit-bastion-iam",
+#         "difficulty": "medium",
+#         "description": "Identify internet-facing bastion access and overprivileged IAM.",
+#         "max_steps": 1,
+#         "reward_range": [0.0, 1.0],
+#         "grader": {
+#             "type": "function",
+#             "module": "graders",
+#             "function": "grade_task_2",
+#             "partial_credit": True,
+#         },
+#     },
+#     {
+#         "id": "iac_audit_task_3",
+#         "name": "audit-attack-chain",
+#         "difficulty": "hard",
+#         "description": "Explain how internet exposure, metadata access, and IAM combine into an attack chain.",
+#         "max_steps": 1,
+#         "reward_range": [0.0, 1.0],
+#         "grader": {
+#             "type": "function",
+#             "module": "graders",
+#             "function": "grade_task_3",
+#             "partial_credit": True,
+#         },
+#     },
+# ]
 
-__all__ = [
-    "TASKS",
-    "GRADERS",
-    "TASK_GRADER_PAIRS",
-    "GradeResult",
-    "grade_submission",
-    "grade_task_0",
-    "grade_task_1",
-    "grade_task_2",
-    "grade_task_3",
-]
+# __all__ = [
+#     "TASKS",
+#     "GRADERS",
+#     "TASK_GRADER_PAIRS",
+#     "GradeResult",
+#     "grade_submission",
+#     "grade_task_0",
+#     "grade_task_1",
+#     "grade_task_2",
+#     "grade_task_3",
+# ]

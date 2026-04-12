@@ -1,4 +1,4 @@
-"""Root app wrapper matching common OpenEnv submission structure."""
+"""Root ASGI entrypoint for validators expecting app:app."""
 
 from server.app import app, main
 
