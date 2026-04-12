@@ -6,7 +6,7 @@ colorTo: yellow
 sdk: docker
 app_port: 8000
 pinned: false
-short_description: OpenEnv environment for auditing Terraform IaC security issues
+short_description: OpenEnv agent env for Terraform security audit
 ---
 
 # IaC Security Auditor OpenEnv Environment
